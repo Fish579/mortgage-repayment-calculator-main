@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Mentor | Mortgage repayment calculator</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <style>
+    body {
+      background-color: #E3F2FB;
+      display: flex;
+      position: absolute;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      width: 100%; 
+    }
+
+    .flex-container {
+      display: flex;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .box {
+      flex: 1;
+      padding: 20px;
+      height: 500px; 
+      box-sizing: border-box;
+    }
+
+    .box-left {
+      background-color: #ffffff;
+      color: #000000;
+      border-top-left-radius: 25px;
+      border-bottom-left-radius: 25px;
+    }
+
+    .box-right {
+      background-color: #00293B;
+      color: #ffffff;
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .clear-btn {
+      background-color: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+    }
+
+    .clear-btn:hover {
+      background-color: #f0f0f0;
+    }
+
+    .calculate-btn {
+      background-color: #D1E231;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 35px;
+      transition: background-color 0.3s;
+      position: relative;
+      width: 80%;
+      height: 45px;
+    }
+
+    .calculate-btn:hover {
+      background-color: #c0d92b;
+    }
+
+    .input-container {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    label {
+      font-size: 14px;
+      color: #333333;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .input-field {
+      width: 80%;
+      padding: 8px 8px 8px 36px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .input-field:hover {
+      border-color: #D1E231;
+    }
+
+    .pound-symbol {
+      position: absolute;
+      top: 50%;
+      left: 8px;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #000000;
+      background-color: #E3F2FB;
+      padding: 8px 10px;
+      border-radius: 4px;
+      pointer-events: none; 
+      margin-top: 2px;
+      margin-left: -7px;
+    }
+
+    .years-symbol {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #000000;
+      background-color: #E3F2FB;
+      padding: 8px 10px;
+      border-radius: 4px;
+      pointer-events: none; 
+      margin-right: 11px; 
+      margin-top: 2px;
+    }
+
+    .percent-symbol {
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: #000000;
+      background-color: #E3F2FB;
+      padding: 8px 10px;
+      border-radius: 4px;
+      pointer-events: none;
+      margin-top: 1px;
+      margin-right: 10px;
+    }
+
+    .inputs-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .input-field-40 {
+      width: 80%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+      cursor: pointer;
+    }
+
+    .input-field-40:hover {
+      border-color: #D1E231;
+    }
+
+    .radio-label {
+      display: block;
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s;
+    }
+
+    .radio-label:hover {
+      border-color: #D1E231;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 5px;
+      visibility: hidden;
+    }
+
+    .error-message.active {
+      visibility: visible; 
+    }
+
+    .box-right h3 {
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    .box-right p {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #ffffff;
+    }
+
+
+    h2 {
+      margin-top: -5px; 
+    }
+
+    /* @media (max-width: 375px) {
+      .flex-container {
+        flex-direction: column;
+        width: 80%;
+      }
+      .box {
+        height: auto;
+      }
+      .box-right, .box-left {
+        border-radius: 0;
+      }
+      .calculate-btn {
+        width: 60%;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .flex-container {
+        flex-direction: column;
+        width: 80%;
+      }
+      .box {
+        height: auto;
+      }
+      .box-right, .box-left {
+        border-radius: 0;
+      }
+      .calculate-btn {
+        width: 60%;
+      }
+    }
+
+    @media (min-width: 1440px) {
+      .flex-container {
+        max-width: 1200px;
+      }
+      .box {
+        padding: 40px;
+      }
+      .input-field, .input-field-40 {
+        width: 80%;
+      }
+      .calculate-btn {
+        font-size: 18px;
+      }
+      .results {
+        padding-top: 10px;
+      }
+    } */
+  </style>
+</head>
+<body>
+  <div class="flex-container">
+    <div class="box box-left">
+      <div class="header">
+        <h2>Mortgage Calculator</h2>
+        <button class="clear-btn">Clear All</button>
+      </div>
+      
+      <div class="input-container">
+        <label for="mortgage-amount">Mortgage Amount</label>
+        <span class="pound-symbol">£</span>
+        <input type="text" id="mortgage-amount" class="input-field" placeholder="Enter amount">
+        <div class="error-message" id="amount-error">This field is required</div>
+      </div>
+      
+      <div class="inputs-row">
+        <div class="input-container">
+          <label for="mortgage-term">Mortgage Term</label>
+          <input type="text" id="mortgage-term" class="input-field-40" placeholder="Years">
+          <span class="years-symbol">years</span>
+          <div class="error-message" id="term-error">This field is required</div>
+        </div>
+        
+        <div class="input-container">
+          <label for="interest-rate">Interest Rate</label>
+          <input type="text" id="interest-rate" class="input-field-40" placeholder="Interest rate">
+          <span class="percent-symbol">%</span>
+          <div class="error-message" id="rate-error">This field is required</div>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <label>Mortgage Type</label>
+        <label class="radio-label">
+          <input type="radio" name="mortgage-type" value="repayment"> Repayment
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="mortgage-type" value="interest-only"> Interest Only
+        </label>
+        <div class="error-message" id="type-error">This field is required</div>
+      </div>
+
+      <button class="calculate-btn">
+        <img src="assets/images/icon-calculator.svg" alt="Description of the image" >
+        Calculate Repayments
+      </button>
+    </div>
+
+    <div class="box box-right">
+      <div class="results" id="results">
+      
+      </div>
+    </div>
+
+    <script>
+
+      function updateResults(monthlyPayment, totalRepayment) {
+        document.querySelector('.results').innerHTML = `
+          <h3 style="margin-top: 15px;">Your results</h3>
+          <p style="color: #C0C0C0;">Your results are shown below based on the information you provided. To adjust the results, edit the form and click “calculate repayments” again.</p>
+          
+          <div class="container" style="width: 300px; padding: 20px; border-radius: 8px; border-top: 4px solid #D1E231; margin-top: 30px; background-color: #00202E;">
+            <div class="text-box">
+              <p style="margin: 0; padding: 10px 0; color: #C0C0C0;">Your monthly repayments:</br><span style="font-size:50px; color:#D1E231;"> £${monthlyPayment.toFixed(2)}</span></p>
+             <hr style="border: none; border-top: 1px solid #ccc; margin: 10px 0;"/>
+              <p style="font-size:15px; color: #C0C0C0;">Total you'll repay over the term </br> <span style="font-size:20px; color: white;">£${totalRepayment.toFixed(2)}</span></p>
+            </div>
+          </div>
+          
+        `;
+      }
+    
+
+      function clearAll() {
+        document.getElementById('mortgage-amount').value = '';
+        document.getElementById('mortgage-term').value = '';
+        document.getElementById('interest-rate').value = '';
+        
+        const radioButtons = document.querySelectorAll('input[name="mortgage-type"]');
+        radioButtons.forEach(radio => radio.checked = false);
+    
+        document.getElementById('amount-error').textContent = '';
+        document.getElementById('term-error').textContent = '';
+        document.getElementById('rate-error').textContent = '';
+        document.getElementById('type-error').textContent = '';
+        document.getElementById('amount-error').classList.remove('active');
+        document.getElementById('term-error').classList.remove('active');
+        document.getElementById('rate-error').classList.remove('active');
+        document.getElementById('type-error').classList.remove('active');
+        resetResults();
+      }
+    
+      function resetResults() {
+        document.querySelector('.results').innerHTML = `
+        <img src="assets/images/illustration-empty.svg" alt="Description of the image" style="width: 200px; height: 300px; margin-left: 80px;">
+          <h3 style="text-align: center;">Results shown here</h3>
+          <p style="text-align: center; color: #C0C0C0;">Complete the form and click “calculate repayments” to see what your monthly repayments would be.</p>
+        `;
+      }
+    
+      document.querySelector('.calculate-btn').addEventListener('click', function() {
+        clearErrors();
+    
+        const amount = parseFloat(document.getElementById('mortgage-amount').value);
+        const term = parseFloat(document.getElementById('mortgage-term').value);
+        const rate = parseFloat(document.getElementById('interest-rate').value);
+        const mortgageType = document.querySelector('input[name="mortgage-type"]:checked');
+    
+        let hasError = false;
+    
+        if (isNaN(amount) || amount <= 0) {
+          document.getElementById('amount-error').textContent = 'This field is required';
+          document.getElementById('amount-error').classList.add('active');
+          hasError = true;
+        }
+    
+        if (isNaN(term) || term <= 0) {
+          document.getElementById('term-error').textContent = 'This field is required';
+          document.getElementById('term-error').classList.add('active');
+          hasError = true;
+        }
+    
+        if (isNaN(rate) || rate <= 0) {
+          document.getElementById('rate-error').textContent = 'This field is required';
+          document.getElementById('rate-error').classList.add('active');
+          hasError = true;
+        }
+    
+        if (!mortgageType) {
+          document.getElementById('type-error').textContent = 'This field is required';
+          document.getElementById('type-error').classList.add('active');
+          hasError = true;
+        }
+    
+        if (!hasError) {
+          const monthlyRate = rate / 100 / 12; 
+          const numberOfPayments = term * 12; 
+    
+          let monthlyPayment;
+          if (mortgageType.value === "repayment") {
+            monthlyPayment = (amount * monthlyRate) / (1 - Math.pow((1 + monthlyRate), -numberOfPayments));
+          } else {
+            monthlyPayment = amount * monthlyRate;
+          }
+    
+          const totalRepayment = monthlyPayment * numberOfPayments;
+          updateResults(monthlyPayment, totalRepayment);
+        }
+      });
+    
+      function clearErrors() {
+        document.getElementById('amount-error').textContent = '';
+        document.getElementById('term-error').textContent = '';
+        document.getElementById('rate-error').textContent = '';
+        document.getElementById('type-error').textContent = '';
+        document.getElementById('amount-error').classList.remove('active');
+        document.getElementById('term-error').classList.remove('active');
+        document.getElementById('rate-error').classList.remove('active');
+        document.getElementById('type-error').classList.remove('active');
+      }
+    
+      document.querySelector('.clear-btn').addEventListener('click', clearAll);
+    
+      resetResults();
+    </script>
+    
+    
+    
+    
+    
+    
+  
+  
+  
+</body>
+</html>
